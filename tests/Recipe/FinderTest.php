@@ -12,10 +12,10 @@ class FinderTest extends \PHPUnit_Framework_TestCase
     public function setup()
     {
         $recipes = new Recipes();
-        $recipes->loadFromJSON(file_get_contents('recipes.json'));
+        $recipes->loadFromJSON(file_get_contents(__DIR__.'/../recipes.json'));
 
         $items = new FridgeItems();
-        $items->loadFromCSVFile('fridge.csv');
+        $items->loadFromCSVFile(__DIR__.'/../fridge.csv');
 
         $fridge = new Fridge($items);
         $this->recipeFinder = new Finder($fridge, $recipes);

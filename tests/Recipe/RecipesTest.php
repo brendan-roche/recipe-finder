@@ -11,7 +11,7 @@ class RecipesTest extends \PHPUnit_Framework_TestCase
     public function setup()
     {
         $this->recipes = new Recipes();
-        $this->recipes->loadFromJSON(file_get_contents('recipes.json'));
+        $this->recipes->loadFromJSON(file_get_contents(__DIR__.'/../recipes.json'));
     }
 
     public function testIterator()

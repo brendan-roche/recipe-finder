@@ -9,7 +9,7 @@ class ItemsTest extends \PHPUnit_Framework_TestCase
     public function setup()
     {
         $this->items = new Items();
-        $this->items->loadFromCSVFile('fridge.csv');
+        $this->items->loadFromCSVFile(__DIR__.'/../fridge.csv');
     }
 
     public function testNearestUseBy()

@@ -13,10 +13,10 @@ class FridgeTest extends \PHPUnit_Framework_TestCase
     public function setup()
     {
         $recipes = new Recipes();
-        $recipes->loadFromJSON(file_get_contents('recipes.json'));
+        $recipes->loadFromJSON(file_get_contents(__DIR__.'/../recipes.json'));
 
         $items = new Items();
-        $items->loadFromCSVFile('fridge.csv');
+        $items->loadFromCSVFile(__DIR__.'/../fridge.csv');
 
         $this->fridge = new Fridge($items);
     }
