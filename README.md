@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/brendan-roche/recipe-finder.png)](https://travis-ci.org/brendan-roche/recipe-finder)
+
 Recipe Finder
 =============
 
