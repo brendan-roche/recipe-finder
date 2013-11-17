@@ -1,27 +1,21 @@
 <?php
-
-namespace Fridge;
-
-use Fridge\Exceptions\InsufficientQuantity;
+namespace Food;
 
 class Item
 {
     const UNIT_OF = 'of';
     const UNIT_GRAMS = 'grams';
-    const UNIT_ML = 'millileters';
+    const UNIT_ML = 'milliliters';
     const UNIT_SLICES = 'slices';
 
     /** @var string */
-    private $name;
-
-    /** @var int */
-    private $amount;
+    protected $name;
 
     /** @var string */
-    private $unit;
+    protected $unit;
 
     /** @var int */
-    private $useBy;
+    protected $amount;
 
     /** @var array */
     private static $unitTypes = array();
@@ -30,6 +24,10 @@ class Item
     {
         $this->setUnitTypes();
         foreach ($params as $name => $value) {
+            // work around for naming conventions used in json input file
+            if($name == 'item') {
+                $name = 'name';
+            }
             $this->__set($name, $value);
         }
     }
@@ -43,7 +41,7 @@ class Item
     {
         $methodName = 'set'.$name;
         if(method_exists($this, $methodName)) {
-            return $this->$methodName();
+            return $this->$methodName($value);
         } elseif (property_exists($this, $name)) {
             $this->$name = $value;
             return true;
@@ -68,20 +66,9 @@ class Item
         return false;
     }
 
-    /**
-     * @param int $amount
-     */
-    public function setAmount($amount)
+    public function __toString()
     {
-        $this->amount = $amount;
-    }
-
-    /**
-     * @return int
-     */
-    public function getAmount()
-    {
-        return $this->amount;
+        return $this->name;
     }
 
     /**
@@ -121,26 +108,23 @@ class Item
     }
 
     /**
-     * Pass in any valid date string
-     *
-     * @param string $useBy
+     * @param int $amount
      * @throws \InvalidArgumentException
      */
-    public function setUseBy($useBy)
+    public function setAmount($amount)
     {
-        // store it as a unix timestamp
-        if (($this->useBy = strtotime($useBy) === false)) {
-            throw new \InvalidArgumentException('Invalid parameter passed for use by date: ' . $useBy . '.');
+        if (!is_numeric($amount)) {
+            throw new \InvalidArgumentException('Invalid parameter passed for item amount: ' . $amount. '. Expecting integer');
         }
+        $this->amount = (int) $amount;
     }
 
     /**
-     * @param string $format
      * @return int
      */
-    public function getUseBy($format = 'Y-m-d')
+    public function getAmount()
     {
-        return date($this->useBy, $format);
+        return $this->amount;
     }
 
     /**
@@ -157,25 +141,5 @@ class Item
                 }
             }
         }
-    }
-
-    /**
-     * Reduce the quantity amount for this item in the fridge.
-     * If there is not enough of this particular item then throw an exception
-     * Otherwise return the remaining amount quantity for this item.
-     *
-     * @param int|float $amount
-     * @return int|float
-     * @throws InsufficientQuantity
-     */
-    public function reduce($amount)
-    {
-        if($amount > $this->amount) {
-            throw new InsufficientQuantity("There is only $this->amount ($this->unit) for item $this->name in the fridge, requested $amount");
-        }
-
-        $this->amount -= $amount;
-
-        return $this->amount;
     }
 }
