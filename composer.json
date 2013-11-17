@@ -2,7 +2,7 @@
     "name": "brendan-roche/recipe-finder",
     "description": "Given a list of items in the fridge, and a collection of recipes, produce a recommendation for what to cook tonight.",
     "keywords": ["recipe finder"],
-    "homepage": "http://bitbucket.com/brendan-roche/recipe-finder",
+    "homepage": "http://bitbucket.org/brendan-roche/recipe-finder",
     "authors": [
         {
             "name": "Brendan Roche",
