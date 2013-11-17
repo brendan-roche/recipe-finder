@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit bootstrap="bootstrap.php" colors="true">
+    <testsuites>
+        <testsuite name="Recipe Finder">
+            <directory>tests/Recipe/</directory>
+            <directory>tests/Fridge/</directory>
+            <directory>tests/Food/</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory suffix=".php">src/Food/</directory>
+            <directory suffix=".php">src/Fridge/</directory>
+            <directory suffix=".php">src/Recipe/</directory>
+        </whitelist>
+    </filter>
+</phpunit>
